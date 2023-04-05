@@ -26,3 +26,14 @@ TeaVM 是 Java 字节码到 JavaScript 的提前编译器。依赖于现有的�
 4. 配置 teavm-dev-server 并启动，**注意**：Proxy 配置项设置为 tomcat 服务器运行地址 【teavm 相当于代理服务器，默认启动在 9090 端口，会从Proxy配置中访问 tomcat 的资源】
 5. mvn package 指令生成 wasm文件
 6. 浏览器访问 http://localhost:9090
+
+如果浏览器控制台报错：Uncaught (in promise) TypeError: Failed to execute 'compile' on 'WebAssembly': Incorrect response MIME type. Expected 'application/wasm'.
+
+请确保在 tomcat 的配置文件【conf/web.xml】中添加以下代码，使其支持 application/wasm 格式
+
+```xml
+<mime-mapping>
+  <extension>wasm</extension>
+  <mime-type>application/wasm</mime-type>
+</mime-mapping>
+```
